@@ -36,9 +36,9 @@ class VenmoActivity : ComponentActivity() {
         val displayName: String = intent.getStringExtra(Constants.DISPLAY_NAME_KEY) as String
         val amount: String = intent.getStringExtra(Constants.AMOUNT_KEY) as String
         val appLinkReturnUrl: String =
-            intent.getStringExtra(Constants.APP_LINK_RETURN_URL) as String
+            intent.getStringExtra(Constants.ANDROID_APP_LINK_RETURN_URL) as String
         val deepLinkFallbackUrlScheme: String? =
-            intent.getStringExtra(Constants.DEEP_LINK_FALLBACK_URL_SCHEME)
+            intent.getStringExtra(Constants.ANDROID_DEEP_LINK_FALLBACK_URL_SCHEME)
 
         venmoLauncher = VenmoLauncher()
         venmoClient = VenmoClient(
@@ -99,7 +99,6 @@ class VenmoActivity : ComponentActivity() {
             )
             when (pendingRequest) {
                 is VenmoPendingRequest.Started -> {
-
                     storedPendingRequest = pendingRequest
                 }
 

@@ -10,8 +10,10 @@ class MockBraintreePaymentPlatform
   @override
   Future<VenmoAccountNonce?> venmoPayment(VenmoRequest request) async {
     expect(request.token, "TOKEN");
-    expect(request.appLinkReturnUrl, "APP_LINK_RETURN_URL");
-    expect(request.deepLinkFallbackUrlScheme, "DEEP_LINK_FALLBACK_URL_SCHEME");
+    expect(request.androidAppLinkReturnUrl, "ANDROID_APP_LINK_RETURN_URL");
+    expect(request.androidDeepLinkFallbackUrlScheme,
+        "ANDROID_DEEP_LINK_FALLBACK_URL_SCHEME");
+    expect(request.iosUniversalLinkReturnUrl, "IOS_UNIVERSAL_LINK_RETURN_URL");
     expect(request.displayName, "EXAMPLE");
     expect(request.amount, "10.0");
 
@@ -32,8 +34,10 @@ class MockBraintreePaymentPlatform
     expect(request.token, "TOKEN");
     expect(request.displayName, "EXAMPLE");
     expect(request.amount, "10.0");
-    expect(request.appLinkReturnUrl, "APP_LINK_RETURN_URL");
-    expect(request.deepLinkFallbackUrlScheme, "DEEP_LINK_FALLBACK_URL_SCHEME");
+    expect(request.currencyCode, "USD");
+    expect(request.androidAppLinkReturnUrl, "ANDROID_APP_LINK_RETURN_URL");
+    expect(request.androidDeepLinkFallbackUrlScheme,
+        "ANDROID_DEEP_LINK_FALLBACK_URL_SCHEME");
     expect(
         request.billingAgreementDescription, "BILLING_AGREEMENT_DESCRIPTION");
 
@@ -68,8 +72,10 @@ void main() {
         token: "TOKEN",
         displayName: "EXAMPLE",
         amount: "10.0",
-        appLinkReturnUrl: "APP_LINK_RETURN_URL",
-        deepLinkFallbackUrlScheme: "DEEP_LINK_FALLBACK_URL_SCHEME",
+        androidAppLinkReturnUrl: "ANDROID_APP_LINK_RETURN_URL",
+        androidDeepLinkFallbackUrlScheme:
+            "ANDROID_DEEP_LINK_FALLBACK_URL_SCHEME",
+        iosUniversalLinkReturnUrl: "IOS_UNIVERSAL_LINK_RETURN_URL",
       ),
     );
 
@@ -92,8 +98,10 @@ void main() {
         token: "TOKEN",
         displayName: "EXAMPLE",
         amount: "10.0",
-        appLinkReturnUrl: "APP_LINK_RETURN_URL",
-        deepLinkFallbackUrlScheme: "DEEP_LINK_FALLBACK_URL_SCHEME",
+        currencyCode: "USD",
+        androidAppLinkReturnUrl: "ANDROID_APP_LINK_RETURN_URL",
+        androidDeepLinkFallbackUrlScheme:
+            "ANDROID_DEEP_LINK_FALLBACK_URL_SCHEME",
         billingAgreementDescription: "BILLING_AGREEMENT_DESCRIPTION",
       ),
     );

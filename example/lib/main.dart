@@ -36,8 +36,10 @@ class _MyAppState extends State<MyApp> {
           token: brainTreeToken,
           amount: "10",
           displayName: "EXAMPLE",
-          appLinkReturnUrl: packageInfo.packageName,
-          deepLinkFallbackUrlScheme: packageInfo.packageName,
+          androidAppLinkReturnUrl: packageInfo.packageName,
+          androidDeepLinkFallbackUrlScheme: packageInfo.packageName,
+          iosUniversalLinkReturnUrl:
+              "https://example.braintree.com/braintree-payments",
         ),
       );
       _braintreeResponse = res.toString();
@@ -65,10 +67,11 @@ class _MyAppState extends State<MyApp> {
         PayPalRequest(
           token: brainTreeToken,
           amount: "10",
+          currencyCode: "USD",
           displayName: "EXAMPLE",
           billingAgreementDescription: "WhoPayForIt??",
-          appLinkReturnUrl: packageInfo.packageName,
-          deepLinkFallbackUrlScheme: packageInfo.packageName,
+          androidAppLinkReturnUrl: packageInfo.packageName,
+          androidDeepLinkFallbackUrlScheme: packageInfo.packageName,
         ),
       );
       _braintreeResponse = res.toString();

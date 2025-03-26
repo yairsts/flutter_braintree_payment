@@ -11,11 +11,11 @@ object Constants {
     const val TOKEN_KEY = "token"
     const val AMOUNT_KEY = "amount"
     const val DISPLAY_NAME_KEY = "displayName"
-    const val APP_LINK_RETURN_URL = "appLinkReturnUrl"
-    const val DEEP_LINK_FALLBACK_URL_SCHEME = "deepLinkFallbackUrlScheme"
+    const val CURRENCY_CODE_KEY = "currencyCode"
+    const val ANDROID_APP_LINK_RETURN_URL = "androidAppLinkReturnUrl"
+    const val ANDROID_DEEP_LINK_FALLBACK_URL_SCHEME = "androidDeepLinkFallbackUrlScheme"
+    const val IOS_UNIVERSAL_LINK_RETURN_URL = "iosUniversalLinkReturnUrl"
     const val BILLING_AGREEMENT_DESCRIPTION = "billingAgreementDescription"
-
-
 
     //Response keys
     const val NONCE_KEY = "nonce"
