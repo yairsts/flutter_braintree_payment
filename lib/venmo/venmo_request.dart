@@ -3,23 +3,26 @@ class VenmoRequest {
     required this.token,
     required this.amount,
     required this.displayName,
-    required this.appLinkReturnUrl,
-    this.deepLinkFallbackUrlScheme,
+    required this.iosUniversalLinkReturnUrl,
+    required this.androidAppLinkReturnUrl,
+    required this.androidDeepLinkFallbackUrlScheme,
   });
 
   final String token;
   final String amount;
   final String displayName;
-  final String appLinkReturnUrl;
-  final String? deepLinkFallbackUrlScheme;
+  final String iosUniversalLinkReturnUrl;
+  final String androidAppLinkReturnUrl;
+  final String androidDeepLinkFallbackUrlScheme;
 
   Map<String, dynamic> toJson() {
     return {
       'token': token,
       'amount': amount,
       'displayName': displayName,
-      'appLinkReturnUrl': appLinkReturnUrl,
-      'deepLinkFallbackUrlScheme': deepLinkFallbackUrlScheme,
+      'iosUniversalLinkReturnUrl': iosUniversalLinkReturnUrl,
+      'androidAppLinkReturnUrl': androidAppLinkReturnUrl,
+      'androidDeepLinkFallbackUrlScheme': androidDeepLinkFallbackUrlScheme,
     };
   }
 }

@@ -31,10 +31,12 @@ class PayPalActivity : ComponentActivity() {
         val token: String = intent.getStringExtra(Constants.TOKEN_KEY) as String
         val displayName: String = intent.getStringExtra(Constants.DISPLAY_NAME_KEY) as String
         val amount: String = intent.getStringExtra(Constants.AMOUNT_KEY) as String
+        val currencyCode: String = intent.getStringExtra(Constants.CURRENCY_CODE_KEY) as String
+
         val appLinkReturnUrl: String =
-            intent.getStringExtra(Constants.APP_LINK_RETURN_URL) as String
+            intent.getStringExtra(Constants.ANDROID_APP_LINK_RETURN_URL) as String
         val deepLinkFallbackUrlScheme: String? =
-            intent.getStringExtra(Constants.DEEP_LINK_FALLBACK_URL_SCHEME)
+            intent.getStringExtra(Constants.ANDROID_DEEP_LINK_FALLBACK_URL_SCHEME)
         val billingAgreementDescription: String? =
             intent.getStringExtra(Constants.BILLING_AGREEMENT_DESCRIPTION)
 
@@ -49,6 +51,7 @@ class PayPalActivity : ComponentActivity() {
         val payPalRequest = PayPalCheckoutRequest(
             displayName = displayName,
             amount = amount,
+            currencyCode = currencyCode,
             hasUserLocationConsent = true,
             billingAgreementDescription = billingAgreementDescription,
         )

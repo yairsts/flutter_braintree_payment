@@ -60,8 +60,10 @@ void main() {
         token: "TOKEN",
         displayName: "EXAMPLE",
         amount: "10.0",
-        appLinkReturnUrl: "APP_LINK_RETURN_URL",
-        deepLinkFallbackUrlScheme: "DEEP_LINK_FALLBACK_URL_SCHEME",
+        androidAppLinkReturnUrl: "ANDROID_APP_LINK_RETURN_URL",
+        androidDeepLinkFallbackUrlScheme:
+            "ANDROID_DEEP_LINK_FALLBACK_URL_SCHEME",
+        iosUniversalLinkReturnUrl: "IOS_UNIVERSAL_LINK_RETURN_URL",
       ),
     );
 
@@ -80,9 +82,11 @@ void main() {
       PayPalRequest(
         token: "TOKEN",
         displayName: "EXAMPLE",
+        currencyCode: "USD",
         amount: "10.0",
-        appLinkReturnUrl: "APP_LINK_RETURN_URL",
-        deepLinkFallbackUrlScheme: "DEEP_LINK_FALLBACK_URL_SCHEME",
+        androidAppLinkReturnUrl: "ANDROID_APP_LINK_RETURN_URL",
+        androidDeepLinkFallbackUrlScheme:
+            "ANDROID_DEEP_LINK_FALLBACK_URL_SCHEME",
         billingAgreementDescription: "BILLING_AGREEMENT_DESCRIPTION",
       ),
     );

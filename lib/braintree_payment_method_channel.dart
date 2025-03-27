@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:braintree_payment/paypal/paypal_request.dart';
 import 'package:flutter/foundation.dart';
@@ -18,6 +19,14 @@ class MethodChannelBraintreePayment extends BraintreePaymentPlatform {
 
   @override
   Future<VenmoAccountNonce?> venmoPayment(VenmoRequest request) async {
+    if (Platform.isAndroid) {
+      assert(request.androidAppLinkReturnUrl != null,
+          "androidAppLinkReturnUrl is required");
+    } else if (Platform.isIOS) {
+      assert(request.iosUniversalLinkReturnUrl != null,
+          "iosUniversalLinkReturnUrl is required");
+    }
+
     final String? res = await methodChannel.invokeMethod<String>(
         BraintreePaymentConstants.venmoPaymentMethodKey, request.toJson());
     if (res != null) {
@@ -28,6 +37,7 @@ class MethodChannelBraintreePayment extends BraintreePaymentPlatform {
     }
   }
 
+  @override
   Future<PayPalAccountNonce?> paypalPayment(PayPalRequest request) async {
     final String? res = await methodChannel.invokeMethod<String>(
         BraintreePaymentConstants.paypalPaymentMethodKey, request.toJson());

@@ -27,11 +27,7 @@ abstract class BraintreePaymentPlatform extends PlatformInterface {
     _instance = instance;
   }
 
-  Future<VenmoAccountNonce?> venmoPayment(VenmoRequest request) {
-    throw UnimplementedError('venmoPayment() has not been implemented.');
-  }
+  Future<VenmoAccountNonce?> venmoPayment(VenmoRequest request);
 
-  Future<PayPalAccountNonce?> paypalPayment(PayPalRequest request) {
-    throw UnimplementedError('paypalPayment() has not been implemented.');
-  }
+  Future<PayPalAccountNonce?> paypalPayment(PayPalRequest request);
 }
