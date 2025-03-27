@@ -15,13 +15,16 @@ void main() {
 
   testWidgets('getPlatformVersion test', (WidgetTester tester) async {
     final BraintreePayment plugin = BraintreePayment();
-    final result = await plugin.venmoPayment(VenmoRequest(
-      token: "TOKEN",
-      appLinkReturnUrl: "",
-      deepLinkFallbackUrlScheme: "",
-      displayName: "EXAMPLE",
-      amount: "10.0",
-    ));
+    final result = await plugin.venmoPayment(
+      VenmoRequest(
+        token: "TOKEN",
+        androidDeepLinkFallbackUrlScheme: "",
+        androidAppLinkReturnUrl: "",
+        iosUniversalLinkReturnUrl: "",
+        displayName: "EXAMPLE",
+        amount: "10.0",
+      ),
+    );
     // The version string depends on the host platform running the test, so
     // just assert that some non-empty string is returned.
     expect(result, true);
