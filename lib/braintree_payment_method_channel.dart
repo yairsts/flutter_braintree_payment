@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:braintree_payment/paypal/paypal_request.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_braintree_payment/paypal/paypal_request.dart';
 
 import 'braintree_payment_constants.dart';
 import 'braintree_payment_platform_interface.dart';

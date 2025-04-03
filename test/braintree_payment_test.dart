@@ -1,6 +1,6 @@
-import 'package:braintree_payment/braintree_payment.dart';
-import 'package:braintree_payment/braintree_payment_method_channel.dart';
-import 'package:braintree_payment/braintree_payment_platform_interface.dart';
+import 'package:flutter_braintree_payment/braintree_payment_method_channel.dart';
+import 'package:flutter_braintree_payment/braintree_payment_platform_interface.dart';
+import 'package:flutter_braintree_payment/flutter_braintree_payment.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 

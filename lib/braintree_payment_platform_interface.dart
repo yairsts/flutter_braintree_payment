@@ -1,5 +1,5 @@
-import 'package:braintree_payment/paypal/paypal_account_nonce.dart';
-import 'package:braintree_payment/paypal/paypal_request.dart';
+import 'package:flutter_braintree_payment/paypal/paypal_account_nonce.dart';
+import 'package:flutter_braintree_payment/paypal/paypal_request.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 import 'braintree_payment_method_channel.dart';

@@ -8,7 +8,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  braintree_payment:
+  flutter_braintree_payment:
     path: ../
 
   cupertino_icons: ^1.0.8
