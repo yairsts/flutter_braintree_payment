@@ -17,8 +17,8 @@ public class BraintreePaymentPlugin: NSObject, FlutterPlugin {
         registrar.addMethodCallDelegate(instance, channel: channel)
         registrar.addApplicationDelegate(instance)
         debugPrint("BraintreePaymentPlugin registered successfully")
-
     }
+
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
         debugPrint("Method called: \(call.method)")
 
@@ -74,8 +74,7 @@ public class BraintreePaymentPlugin: NSObject, FlutterPlugin {
         let venmoRequest = BTVenmoRequest(paymentMethodUsage: .multiUse)
         venmoRequest.displayName = displayName
         venmoRequest.totalAmount = amountString
-
-        //        venmoRequest.fallbackToWeb = true
+        //  venmoRequest.fallbackToWeb = true
 
         venmoClient.tokenize(venmoRequest) { venmoAccount, error in
             if let error = error {
@@ -194,7 +193,7 @@ public class BraintreePaymentPlugin: NSObject, FlutterPlugin {
                     details: error.localizedDescription))
         }
     }
-    
+
     public func application(
       _ application: UIApplication,
       continue userActivity: NSUserActivity,
@@ -205,16 +204,16 @@ public class BraintreePaymentPlugin: NSObject, FlutterPlugin {
             return false
         }
         debugPrint("Received Universal Link: \(url)")
-        
+
         if isBraintreeUniversalLink(url) {
             debugPrint("Processing Universal Link: \(url)")
             BTAppContextSwitcher.sharedInstance.handleOpen(url)
             return true
         }
-        
+
         return false
     }
-    
+
    private func isBraintreeUniversalLink(_ url: URL) -> Bool {
        guard let universalLinkURL
        else {
