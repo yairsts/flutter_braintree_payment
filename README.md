@@ -38,7 +38,7 @@ initiate payments via Venmo and PayPal using **Braintree SDK** for both Android 
 
 #### Venmo integration
 
-**Configure URL Schemes in `Info.plist`:** Add this query scheme to your `ios/Runner/Info.plist` file
+##### Configure URL Schemes in `Info.plist`: Add this query scheme to your `ios/Runner/Info.plist` file
 for Braintree and your app:
 
    ```xml
@@ -48,7 +48,7 @@ for Braintree and your app:
     </array>
    ```
 
-**To allow Venmo app redirect to your application, you should configure a universal link.
+##### To allow Venmo app redirect to your application, you should configure a universal link.
 #### Setting Up Universal Links for iOS
 
 #### 1.1. Set up Associated Domains
@@ -97,7 +97,7 @@ The AASA file must be:
 
    ```dart
    import 'package:braintree_payment/braintree_payment.dart';
-   import 'package:package_info_plus/package_info_plus.dart';
+import 'package:package_info_plus/package_info_plus.dart';
    ```
 
 #### 2. Initialize and Process Payments:
