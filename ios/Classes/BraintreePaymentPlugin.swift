@@ -1,19 +1,24 @@
 import Braintree
 import Flutter
-import Foundation
+import UIKit
 
+public class BraintreePayment {
+  static public let shared = BraintreePaymentPlugin()
+
+  private init() {}
+}
 public class BraintreePaymentPlugin: NSObject, FlutterPlugin {
-
     private var flutterResult: FlutterResult?
+    private var universalLinkURL: URL?
 
     public static func register(with registrar: FlutterPluginRegistrar) {
-        let channel = FlutterMethodChannel(
-            name: "braintree_payment", binaryMessenger: registrar.messenger())
-        let instance = BraintreePaymentPlugin()
+        let channel = FlutterMethodChannel(name: "braintree_payment", binaryMessenger: registrar.messenger())
+        let instance = BraintreePayment.shared
         registrar.addMethodCallDelegate(instance, channel: channel)
+        registrar.addApplicationDelegate(instance)
         debugPrint("BraintreePaymentPlugin registered successfully")
-    }
 
+    }
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
         debugPrint("Method called: \(call.method)")
 
@@ -58,12 +63,12 @@ public class BraintreePaymentPlugin: NSObject, FlutterPlugin {
             "Starting Venmo flow with displayName: \(displayName ?? "N/A"), amount: \(amountString ?? "0")"
         )
 
-        let universalLink = URL(string: iosUniversalLinkReturnUrl)
+        universalLinkURL = URL(string: iosUniversalLinkReturnUrl)
 
         let apiClient = BTAPIClient(authorization: token)
         let venmoClient = BTVenmoClient(
             apiClient: apiClient!,
-            universalLink: universalLink!
+            universalLink: universalLinkURL!
         )
 
         let venmoRequest = BTVenmoRequest(paymentMethodUsage: .multiUse)
@@ -189,6 +194,37 @@ public class BraintreePaymentPlugin: NSObject, FlutterPlugin {
                     details: error.localizedDescription))
         }
     }
+    
+    public func application(
+      _ application: UIApplication,
+      continue userActivity: NSUserActivity,
+      restorationHandler: @escaping ([Any]) -> Void
+    ) -> Bool {
+        guard userActivity.activityType == NSUserActivityTypeBrowsingWeb,
+              let url = userActivity.webpageURL else {
+            return false
+        }
+        debugPrint("Received Universal Link: \(url)")
+        
+        if isBraintreeUniversalLink(url) {
+            debugPrint("Processing Universal Link: \(url)")
+            BTAppContextSwitcher.sharedInstance.handleOpen(url)
+            return true
+        }
+        
+        return false
+    }
+    
+   private func isBraintreeUniversalLink(_ url: URL) -> Bool {
+       guard let universalLinkURL
+       else {
+           debugPrint("Invalid or missing Universal Link parameter.")
+           return false
+       }
+
+       return url.scheme == universalLinkURL.scheme && url.host == universalLinkURL.host
+           && url.path.hasPrefix(universalLinkURL.path)
+   }
 }
 
 public struct Constants {
