@@ -1,9 +1,9 @@
 import 'dart:convert';
 
-import 'package:braintree_payment/braintree_payment.dart';
-import 'package:braintree_payment/braintree_payment_constants.dart';
-import 'package:braintree_payment/braintree_payment_method_channel.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_braintree_payment/braintree_payment_constants.dart';
+import 'package:flutter_braintree_payment/braintree_payment_method_channel.dart';
+import 'package:flutter_braintree_payment/flutter_braintree_payment.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

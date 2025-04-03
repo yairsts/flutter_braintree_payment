@@ -3,7 +3,7 @@
 # Run `pod lib lint braintree_payment.podspec` to validate before publishing.
 #
 Pod::Spec.new do |s|
-  s.name             = 'braintree_payment'
+  s.name             = 'flutter_braintree_payment'
   s.version          = '0.0.1'
   s.summary          = 'A new Flutter plugin project.'
   s.description      = <<-DESC

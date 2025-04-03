@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:braintree_payment/braintree_payment.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_braintree_payment/flutter_braintree_payment.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 

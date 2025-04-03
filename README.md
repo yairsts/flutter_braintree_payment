@@ -11,13 +11,13 @@ initiate payments via Venmo and PayPal using **Braintree SDK** for both Android 
 
 ## Installation
 
-1. **Add Dependency:** Add the `braintree_payment` package to your `pubspec.yaml` file:
+1. **Add Dependency:** Add the `flutter_braintree_payment` package to your `pubspec.yaml` file:
 
    ```yaml
    dependencies:
      flutter:
        sdk: flutter
-     braintree_payment: <latest_version> # Replace <latest_version> with the current version
+     flutter_braintree_payment: <latest_version> # Replace <latest_version> with the current version
    ```
 
 2. **Install Packages:** Run `flutter pub get` in your terminal.
@@ -96,7 +96,7 @@ The AASA file must be:
 #### 1. Import the Package:
 
    ```dart
-   import 'package:braintree_payment/braintree_payment.dart';
+   import 'package:flutter_braintree_payment/flutter_braintree_payment.dart';
 import 'package:package_info_plus/package_info_plus.dart';
    ```
 
