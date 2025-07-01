@@ -7,6 +7,7 @@ class PayPalRequest {
     required this.androidAppLinkReturnUrl,
     this.androidDeepLinkFallbackUrlScheme,
     this.billingAgreementDescription,
+    this.paymentIntent,
   });
 
   final String token;
@@ -16,6 +17,7 @@ class PayPalRequest {
   final String androidAppLinkReturnUrl;
   final String? androidDeepLinkFallbackUrlScheme;
   final String? billingAgreementDescription;
+  final String? paymentIntent;
 
   Map<String, dynamic> toJson() {
     return {
@@ -26,6 +28,7 @@ class PayPalRequest {
       'androidAppLinkReturnUrl': androidAppLinkReturnUrl,
       'androidDeepLinkFallbackUrlScheme': androidDeepLinkFallbackUrlScheme,
       'billingAgreementDescription': billingAgreementDescription,
+      'intent': paymentIntent,
     };
   }
 }

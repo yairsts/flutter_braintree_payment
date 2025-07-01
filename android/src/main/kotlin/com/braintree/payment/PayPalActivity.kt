@@ -12,6 +12,8 @@ import com.braintreepayments.api.paypal.PayPalClient
 import com.braintreepayments.api.paypal.PayPalLauncher
 import com.braintreepayments.api.paypal.PayPalPaymentAuthRequest
 import com.braintreepayments.api.paypal.PayPalPaymentAuthResult
+import com.braintreepayments.api.paypal.PayPalPaymentIntent
+import com.braintreepayments.api.paypal.PayPalPaymentUserAction
 import com.braintreepayments.api.paypal.PayPalPendingRequest
 import com.braintreepayments.api.paypal.PayPalResult
 import org.json.JSONObject
@@ -39,6 +41,8 @@ class PayPalActivity : ComponentActivity() {
             intent.getStringExtra(Constants.ANDROID_DEEP_LINK_FALLBACK_URL_SCHEME)
         val billingAgreementDescription: String? =
             intent.getStringExtra(Constants.BILLING_AGREEMENT_DESCRIPTION)
+        val paymentIntent: String? =
+            intent.getStringExtra(Constants.PAYMENT_INTENT)
 
         paypalLauncher = PayPalLauncher()
         paypalClient = PayPalClient(
@@ -54,6 +58,11 @@ class PayPalActivity : ComponentActivity() {
             currencyCode = currencyCode,
             hasUserLocationConsent = true,
             billingAgreementDescription = billingAgreementDescription,
+            intent = when (paymentIntent) {
+                "sale" -> PayPalPaymentIntent.SALE
+                "order" -> PayPalPaymentIntent.ORDER
+                else -> PayPalPaymentIntent.AUTHORIZE
+            }
         )
 
         startPayPalFlow(payPalRequest)

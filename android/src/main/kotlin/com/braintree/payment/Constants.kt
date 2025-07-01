@@ -16,6 +16,7 @@ object Constants {
     const val ANDROID_DEEP_LINK_FALLBACK_URL_SCHEME = "androidDeepLinkFallbackUrlScheme"
     const val IOS_UNIVERSAL_LINK_RETURN_URL = "iosUniversalLinkReturnUrl"
     const val BILLING_AGREEMENT_DESCRIPTION = "billingAgreementDescription"
+    const val PAYMENT_INTENT = "paymentIntent"
 
     //Response keys
     const val NONCE_KEY = "nonce"
