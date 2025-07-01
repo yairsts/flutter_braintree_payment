@@ -17,6 +17,7 @@ object Constants {
     const val IOS_UNIVERSAL_LINK_RETURN_URL = "iosUniversalLinkReturnUrl"
     const val BILLING_AGREEMENT_DESCRIPTION = "billingAgreementDescription"
     const val PAYMENT_INTENT = "paymentIntent"
+    const val USER_ACTION = "userAction"
 
     //Response keys
     const val NONCE_KEY = "nonce"

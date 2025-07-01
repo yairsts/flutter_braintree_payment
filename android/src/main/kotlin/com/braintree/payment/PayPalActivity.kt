@@ -43,6 +43,8 @@ class PayPalActivity : ComponentActivity() {
             intent.getStringExtra(Constants.BILLING_AGREEMENT_DESCRIPTION)
         val paymentIntent: String? =
             intent.getStringExtra(Constants.PAYMENT_INTENT)
+        val userAction: String? =
+            intent.getStringExtra(Constants.USER_ACTION)
 
         paypalLauncher = PayPalLauncher()
         paypalClient = PayPalClient(
@@ -62,6 +64,10 @@ class PayPalActivity : ComponentActivity() {
                 "sale" -> PayPalPaymentIntent.SALE
                 "order" -> PayPalPaymentIntent.ORDER
                 else -> PayPalPaymentIntent.AUTHORIZE
+            },
+            userAction = when (userAction) {
+                "commit" -> PayPalPaymentUserAction.USER_ACTION_COMMIT
+                else -> PayPalPaymentUserAction.USER_ACTION_DEFAULT
             }
         )
 

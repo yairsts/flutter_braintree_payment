@@ -1,3 +1,7 @@
+enum PaymentIntent { sale, order, authorize }
+
+enum PaymentUserAction { commit }
+
 class PayPalRequest {
   PayPalRequest({
     required this.token,
@@ -8,6 +12,7 @@ class PayPalRequest {
     this.androidDeepLinkFallbackUrlScheme,
     this.billingAgreementDescription,
     this.paymentIntent,
+    this.userAction,
   });
 
   final String token;
@@ -17,7 +22,8 @@ class PayPalRequest {
   final String androidAppLinkReturnUrl;
   final String? androidDeepLinkFallbackUrlScheme;
   final String? billingAgreementDescription;
-  final String? paymentIntent;
+  final PaymentIntent? paymentIntent;
+  final PaymentUserAction? userAction;
 
   Map<String, dynamic> toJson() {
     return {
@@ -28,7 +34,8 @@ class PayPalRequest {
       'androidAppLinkReturnUrl': androidAppLinkReturnUrl,
       'androidDeepLinkFallbackUrlScheme': androidDeepLinkFallbackUrlScheme,
       'billingAgreementDescription': billingAgreementDescription,
-      'intent': paymentIntent,
+      'paymentIntent': paymentIntent?.name,
+      'userAction': userAction?.name,
     };
   }
 }
