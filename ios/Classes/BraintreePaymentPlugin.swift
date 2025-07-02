@@ -105,6 +105,24 @@ public class BraintreePaymentPlugin: NSObject, FlutterPlugin {
         }
         let currencyCode = args[Constants.CURRENCY_CODE_KEY] as? String
 
+        let paymentIntent = args[Constants.PAYMENT_INTENT] as? String?
+        let intent: BTPayPalRequestIntent
+        if paymentIntent == "sale" {
+            intent = .sale
+        } else if paymentIntent == "order" {
+            intent = .order
+        } else {
+            intent = .authorize // Fallback to authorize
+        }
+
+        let uAction = args[Constants.USER_ACTION] as? String?
+        let userAction: BTPayPalRequestUserAction
+        if uAction == "commit" {
+            userAction = .payNow
+        } else {
+            userAction = .none
+        }
+
         // Initialize Braintree API Client
         guard let apiClient = BTAPIClient(authorization: token) else {
             flutterResult?(
@@ -114,7 +132,7 @@ public class BraintreePaymentPlugin: NSObject, FlutterPlugin {
         }
 
         let payPalClient = BTPayPalClient(apiClient: apiClient)
-        let request = BTPayPalCheckoutRequest(amount: amountString, currencyCode: currencyCode)
+        let request = BTPayPalCheckoutRequest(amount: amountString, intent: intent, userAction: userAction, currencyCode: currencyCode)
 
         // Tokenize PayPal payment
         payPalClient.tokenize(request) { tokenizedPayPalAccount, error in
@@ -236,6 +254,8 @@ public struct Constants {
     static let CURRENCY_CODE_KEY = "currencyCode"
     static let IOS_UNIVERSAL_LINK_RETURN_URL = "iosUniversalLinkReturnUrl"
     static let DISPLAY_NAME_KEY = "displayName"
+    static let PAYMENT_INTENT = "paymentIntent"
+    static let USER_ACTION = "userAction"
 
     // Response keys
     static let NONCE_KEY = "nonce"
