@@ -1,6 +1,6 @@
 name: flutter_braintree_payment
 description: Flutter plugin that wraps the native Braintree SDKs. PayPal and Venmo.
-version: 1.0.0
+version: 1.1.0
 homepage: "https://github.com/yairsts/braintree_payment"
 
 environment:
