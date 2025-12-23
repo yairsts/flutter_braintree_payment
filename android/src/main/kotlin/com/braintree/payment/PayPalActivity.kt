@@ -50,7 +50,7 @@ class PayPalActivity : ComponentActivity() {
         paypalClient = PayPalClient(
             context = this,
             authorization = token,
-            appLinkReturnUrl = Uri.parse("$appLinkReturnUrl.paypal"),
+            appLinkReturnUrl = Uri.parse("$appLinkReturnUrl.paypal://"),
             deepLinkFallbackUrlScheme = "$deepLinkFallbackUrlScheme.paypal",
         )
 

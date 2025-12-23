@@ -44,7 +44,7 @@ class VenmoActivity : ComponentActivity() {
         venmoClient = VenmoClient(
             context = this,
             authorization = token,
-            appLinkReturnUrl = Uri.parse("$appLinkReturnUrl.venmo"),
+            appLinkReturnUrl = Uri.parse("$appLinkReturnUrl.venmo://"),
             deepLinkFallbackUrlScheme = "$deepLinkFallbackUrlScheme.venmo",
         )
 
