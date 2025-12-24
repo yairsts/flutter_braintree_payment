@@ -129,7 +129,8 @@ class VenmoActivity : ComponentActivity() {
         if (value.contains("://")) {
             return Uri.parse(value)
         }
-        return Uri.parse("$value.$suffix://")
+        val scheme = if (value.endsWith(".$suffix")) value else "$value.$suffix"
+        return Uri.parse(scheme)
     }
 
     private fun resolveFallbackScheme(raw: String?, suffix: String): String {
