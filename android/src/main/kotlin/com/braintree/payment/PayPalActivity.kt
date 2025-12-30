@@ -50,8 +50,8 @@ class PayPalActivity : ComponentActivity() {
         paypalClient = PayPalClient(
             context = this,
             authorization = token,
-            appLinkReturnUrl = Uri.parse("$appLinkReturnUrl.paypal"),
-            deepLinkFallbackUrlScheme = "$deepLinkFallbackUrlScheme.paypal",
+            appLinkReturnUrl = resolveAppLinkReturnUrl(appLinkReturnUrl, "paypal"),
+            deepLinkFallbackUrlScheme = resolveFallbackScheme(deepLinkFallbackUrlScheme, "paypal"),
         )
 
         val payPalRequest = PayPalCheckoutRequest(
@@ -170,6 +170,28 @@ class PayPalActivity : ComponentActivity() {
             }
             storedPendingRequest = null
         }
+    }
+
+    private fun resolveAppLinkReturnUrl(raw: String, suffix: String): Uri {
+        val value = raw.trim()
+        if (value.contains("://")) {
+            return Uri.parse(value)
+        }
+        val scheme = if (value.endsWith(".$suffix")) value else "$value.$suffix"
+        return Uri.parse(scheme)
+    }
+
+    private fun resolveFallbackScheme(raw: String?, suffix: String): String {
+        val value = raw?.trim().orEmpty()
+        if (value.isEmpty()) {
+            return value
+        }
+        val scheme = if (value.contains("://")) {
+            Uri.parse(value).scheme ?: value
+        } else {
+            value
+        }
+        return if (scheme.endsWith(".$suffix")) scheme else "$scheme.$suffix"
     }
 
     private fun completePayPalFlow(paymentAuthResult: PayPalPaymentAuthResult.Success) {

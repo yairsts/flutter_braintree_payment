@@ -44,8 +44,8 @@ class VenmoActivity : ComponentActivity() {
         venmoClient = VenmoClient(
             context = this,
             authorization = token,
-            appLinkReturnUrl = Uri.parse("$appLinkReturnUrl.venmo"),
-            deepLinkFallbackUrlScheme = "$deepLinkFallbackUrlScheme.venmo",
+            appLinkReturnUrl = resolveAppLinkReturnUrl(appLinkReturnUrl, "venmo"),
+            deepLinkFallbackUrlScheme = resolveFallbackScheme(deepLinkFallbackUrlScheme, "venmo"),
         )
 
         val venmoRequest = VenmoRequest(
@@ -122,6 +122,28 @@ class VenmoActivity : ComponentActivity() {
         super.onResume()
         Log.d("BraintreePaymentPlugin", "onResume, intent: $intent")
         handleReturnToApp(intent)
+    }
+
+    private fun resolveAppLinkReturnUrl(raw: String, suffix: String): Uri {
+        val value = raw.trim()
+        if (value.contains("://")) {
+            return Uri.parse(value)
+        }
+        val scheme = if (value.endsWith(".$suffix")) value else "$value.$suffix"
+        return Uri.parse(scheme)
+    }
+
+    private fun resolveFallbackScheme(raw: String?, suffix: String): String {
+        val value = raw?.trim().orEmpty()
+        if (value.isEmpty()) {
+            return value
+        }
+        val scheme = if (value.contains("://")) {
+            Uri.parse(value).scheme ?: value
+        } else {
+            value
+        }
+        return if (scheme.endsWith(".$suffix")) scheme else "$scheme.$suffix"
     }
 
     private fun handleReturnToApp(intent: Intent) {
