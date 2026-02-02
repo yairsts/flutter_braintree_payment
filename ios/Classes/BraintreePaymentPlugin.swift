@@ -137,7 +137,12 @@ public class BraintreePaymentPlugin: NSObject, FlutterPlugin {
         // Tokenize PayPal payment
         payPalClient.tokenize(request) { tokenizedPayPalAccount, error in
             if let error = error {
-                self.handleError(error)
+                let nsError = error as NSError
+                if nsError.code == BTPayPalError.canceled.errorCode {
+                    self.handleCancellation()
+                } else {
+                    self.handleError(nsError)
+                }
             } else if let tokenizedPayPalAccount = tokenizedPayPalAccount {
                 self.handleSuccess(payPalAccount: tokenizedPayPalAccount)
             } else {
