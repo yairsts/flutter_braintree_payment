@@ -32,11 +32,20 @@ class VenmoActivity : ComponentActivity() {
             "BraintreePaymentPlugin",
             "VenmoActivity, onCreate, intent: ${intent}"
         )
-        val token: String = intent.getStringExtra(Constants.TOKEN_KEY) as String
-        val displayName: String = intent.getStringExtra(Constants.DISPLAY_NAME_KEY) as String
-        val amount: String = intent.getStringExtra(Constants.AMOUNT_KEY) as String
-        val appLinkReturnUrl: String =
-            intent.getStringExtra(Constants.ANDROID_APP_LINK_RETURN_URL) as String
+        val token = intent.getStringExtra(Constants.TOKEN_KEY)
+        val displayName = intent.getStringExtra(Constants.DISPLAY_NAME_KEY)
+        val amount = intent.getStringExtra(Constants.AMOUNT_KEY)
+        val appLinkReturnUrl = intent.getStringExtra(Constants.ANDROID_APP_LINK_RETURN_URL)
+
+        // A return from Venmo recreates this activity when the process was
+        // reclaimed, and that intent carries none of the launch extras.
+        if (token == null || displayName == null || amount == null ||
+            appLinkReturnUrl == null
+        ) {
+            handleCancelResult("Relaunched without the original request")
+            return
+        }
+
         val deepLinkFallbackUrlScheme: String? =
             intent.getStringExtra(Constants.ANDROID_DEEP_LINK_FALLBACK_URL_SCHEME)
 
