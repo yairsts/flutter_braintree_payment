@@ -10,3 +10,4 @@
 - Handle cancellation flow in iOS
 ## [1.3.1] - 2026-09-23
 - Returning from PayPal or Venmo no longer crashes when Android reclaimed the app while the payment was open; the payment is reported as cancelled instead.
+- Drop the unused drop-in dependency, which was adding its own externally reachable screen to every app using this plugin.
