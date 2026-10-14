@@ -14,3 +14,5 @@
 ## [2.0.0] - 2026-10-14
 - **Breaking (iOS):** a cancelled PayPal or Venmo payment now completes with `null`, as it always did on Android. It used to throw a `PlatformException` with code `canceled`. A failed payment still throws a `PlatformException` with code `error` on both platforms.
 - Android: an activity result with no nonce, error or cancel extra now completes with `null` instead of leaving the call waiting forever, and a second activity result can no longer reply to a call that was already answered.
+## [2.0.1] - 2026-10-14
+- iOS: a cancelled Venmo payment now completes with `null`, like PayPal. It used to throw a `PlatformException` with code `error`.

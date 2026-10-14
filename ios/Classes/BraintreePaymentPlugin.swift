@@ -78,8 +78,13 @@ public class BraintreePaymentPlugin: NSObject, FlutterPlugin {
 
         venmoClient.tokenize(venmoRequest) { venmoAccount, error in
             if let error = error {
-                debugPrint("venmoClient.tokenize: error: \(error)")
-                self.handleError(error)
+                let nsError = error as NSError
+                if nsError.code == BTVenmoError.canceled.errorCode {
+                    self.handleCancellation()
+                } else {
+                    debugPrint("venmoClient.tokenize: error: \(error)")
+                    self.handleError(nsError)
+                }
             } else if let venmoAccount = venmoAccount {
                 debugPrint("venmoClient.tokenize: venmoAccount: \(venmoAccount)")
                 self.handleSuccess(venmoAccount: venmoAccount)
