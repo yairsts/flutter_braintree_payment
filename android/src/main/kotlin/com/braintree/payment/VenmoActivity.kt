@@ -42,7 +42,7 @@ class VenmoActivity : ComponentActivity() {
         if (token == null || displayName == null || amount == null ||
             appLinkReturnUrl == null
         ) {
-            handleCancelResult("Relaunched without the original request")
+            handleCancelResult(Constants.REQUEST_LOST)
             return
         }
 
@@ -181,7 +181,7 @@ class VenmoActivity : ComponentActivity() {
                 }
 
                 is VenmoPaymentAuthResult.NoResult -> {
-                    handleCancelResult(paymentAuthResult.toString())
+                    handleCancelResult(Constants.NO_RESULT)
                 }
             }
             storedPendingRequest = null
@@ -213,7 +213,7 @@ class VenmoActivity : ComponentActivity() {
             }
 
             is VenmoResult.Cancel -> {
-                handleCancelResult(result.toString())
+                handleCancelResult(Constants.USER_CANCELED)
             }
         }
     }
@@ -255,13 +255,13 @@ class VenmoActivity : ComponentActivity() {
         finish()
     }
 
-    private fun handleCancelResult(message: String) {
+    private fun handleCancelResult(reason: String) {
         Log.d(
             "BraintreePaymentPlugin",
-            "handleCancelResult, message: $message"
+            "handleCancelResult, reason: $reason"
         )
         val resultIntent = Intent().apply {
-            putExtra(Constants.CANCELED_KEY, message.toString())
+            putExtra(Constants.CANCELED_KEY, reason)
         }
         setResult(Activity.RESULT_CANCELED, resultIntent)
         finish()

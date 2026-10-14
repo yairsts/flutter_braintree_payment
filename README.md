@@ -110,7 +110,7 @@ import 'package:package_info_plus/package_info_plus.dart';
       final PackageInfo packageInfo = await PackageInfo.fromPlatform();
 
       try {
-        final VenmoAccountNonce? result = await braintreePayment.venmoPayment(
+        final result = await braintreePayment.venmoPayment(
           VenmoRequest(
             token: token,
             amount: "10.00",
@@ -121,11 +121,12 @@ import 'package:package_info_plus/package_info_plus.dart';
           ),
         );
 
-        if (result == null) {
-          print("Venmo payment cancelled");
-        } else {
-          print("Venmo payment succeeded: ${result.nonce}");
-          // Process the payment with your backend using the nonce
+        switch (result) {
+          case BraintreeSuccess(:final nonce):
+            print("Venmo payment succeeded: ${nonce.nonce}");
+            // Process the payment with your backend using the nonce
+          case BraintreeCancelled(:final reason):
+            print("Venmo payment cancelled: ${reason.name}");
         }
       } on PlatformException catch (e) {
         print("Venmo payment failed: ${e.message}");
@@ -140,7 +141,7 @@ import 'package:package_info_plus/package_info_plus.dart';
       final PackageInfo packageInfo = await PackageInfo.fromPlatform();
 
       try {
-          final PayPalAccountNonce? result = await braintreePayment.paypalPayment(
+          final result = await braintreePayment.paypalPayment(
               PayPalRequest(
                   token: token,
                   amount: "10",
@@ -151,11 +152,12 @@ import 'package:package_info_plus/package_info_plus.dart';
               ),
           );
 
-          if (result == null) {
-              print("PayPal payment cancelled");
-          } else {
-              print("PayPal payment succeeded: ${result.nonce}");
-              // Process the payment with your backend using the nonce
+          switch (result) {
+              case BraintreeSuccess(:final nonce):
+                  print("PayPal payment succeeded: ${nonce.nonce}");
+                  // Process the payment with your backend using the nonce
+              case BraintreeCancelled(:final reason):
+                  print("PayPal payment cancelled: ${reason.name}");
           }
       } on PlatformException catch (e) {
           print("PayPal payment failed: ${e.message}");

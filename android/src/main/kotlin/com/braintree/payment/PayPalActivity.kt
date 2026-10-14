@@ -41,7 +41,7 @@ class PayPalActivity : ComponentActivity() {
         if (token == null || displayName == null || amount == null ||
             currencyCode == null || appLinkReturnUrl == null
         ) {
-            handleCancelResult("Relaunched without the original request")
+            handleCancelResult(Constants.REQUEST_LOST)
             return
         }
 
@@ -173,7 +173,7 @@ class PayPalActivity : ComponentActivity() {
                 }
 
                 is PayPalPaymentAuthResult.NoResult -> {
-                    handleCancelResult(paymentAuthResult.toString())
+                    handleCancelResult(Constants.NO_RESULT)
                 }
             }
             storedPendingRequest = null
@@ -227,7 +227,7 @@ class PayPalActivity : ComponentActivity() {
             }
 
             is PayPalResult.Cancel -> {
-                handleCancelResult(result.toString())
+                handleCancelResult(Constants.USER_CANCELED)
             }
         }
     }
@@ -268,12 +268,12 @@ class PayPalActivity : ComponentActivity() {
         finish()
     }
 
-    private fun handleCancelResult(message: String) {
+    private fun handleCancelResult(reason: String) {
         Log.d(
-            "BraintreePaymentPlugin", "handleCancelResult, message: $message"
+            "BraintreePaymentPlugin", "handleCancelResult, reason: $reason"
         )
         val resultIntent = Intent().apply {
-            putExtra(Constants.CANCELED_KEY, message.toString())
+            putExtra(Constants.CANCELED_KEY, reason)
         }
         setResult(RESULT_CANCELED, resultIntent)
         finish()

@@ -82,11 +82,17 @@ class BraintreePaymentPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             pendingResult = null
             val error = intent?.getStringExtra(Constants.ERROR_KEY)
             when {
-                resultCode == Activity.RESULT_OK && intent != null ->
-                    result.success(intent.getStringExtra(Constants.NONCE_KEY))
+                resultCode == Activity.RESULT_OK && intent != null -> result.success(
+                    mapOf(Constants.NONCE_KEY to intent.getStringExtra(Constants.NONCE_KEY))
+                )
                 error != null -> result.error(Constants.ERROR_KEY, error, null)
-                // Cancelled, or no result at all: complete with null, never hang.
-                else -> result.success(null)
+                // Cancelled, or no result at all: always reply, never hang.
+                else -> result.success(
+                    mapOf(
+                        Constants.CANCELED_KEY to
+                            (intent?.getStringExtra(Constants.CANCELED_KEY) ?: Constants.NO_RESULT)
+                    )
+                )
             }
         }
     }

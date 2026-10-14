@@ -16,3 +16,5 @@
 - Android: an activity result with no nonce, error or cancel extra now completes with `null` instead of leaving the call waiting forever, and a second activity result can no longer reply to a call that was already answered.
 ## [2.0.1] - 2026-10-14
 - iOS: a cancelled Venmo payment now completes with `null`, like PayPal. It used to throw a `PlatformException` with code `error`.
+## [3.0.0] - 2026-10-14
+- **Breaking:** `paypalPayment` and `venmoPayment` complete with a `BraintreeResult`: `BraintreeSuccess` with the nonce, or `BraintreeCancelled` with a `BraintreeCancelReason` (`userCanceled`, `noResult`, or `requestLost` on Android). They used to complete with `null` on a cancel, which hid why. A failure still throws a `PlatformException` with code `error`.

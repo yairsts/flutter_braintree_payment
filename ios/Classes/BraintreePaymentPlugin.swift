@@ -80,7 +80,7 @@ public class BraintreePaymentPlugin: NSObject, FlutterPlugin {
             if let error = error {
                 let nsError = error as NSError
                 if nsError.code == BTVenmoError.canceled.errorCode {
-                    self.handleCancellation()
+                    self.handleCancellation(Constants.USER_CANCELED)
                 } else {
                     debugPrint("venmoClient.tokenize: error: \(error)")
                     self.handleError(nsError)
@@ -90,7 +90,7 @@ public class BraintreePaymentPlugin: NSObject, FlutterPlugin {
                 self.handleSuccess(venmoAccount: venmoAccount)
             } else {
                 debugPrint("venmoClient.tokenize: cancel")
-                self.handleCancellation()
+                self.handleCancellation(Constants.NO_RESULT)
             }
         }
     }
@@ -144,14 +144,14 @@ public class BraintreePaymentPlugin: NSObject, FlutterPlugin {
             if let error = error {
                 let nsError = error as NSError
                 if nsError.code == BTPayPalError.canceled.errorCode {
-                    self.handleCancellation()
+                    self.handleCancellation(Constants.USER_CANCELED)
                 } else {
                     self.handleError(nsError)
                 }
             } else if let tokenizedPayPalAccount = tokenizedPayPalAccount {
                 self.handleSuccess(payPalAccount: tokenizedPayPalAccount)
             } else {
-                self.handleCancellation()
+                self.handleCancellation(Constants.NO_RESULT)
             }
         }
     }
@@ -164,10 +164,10 @@ public class BraintreePaymentPlugin: NSObject, FlutterPlugin {
                 code: Constants.ERROR_KEY, message: error.localizedDescription, details: nil))
     }
 
-    // A cancel completes with nil on both platforms; only a failure is an error.
-    private func handleCancellation() {
-        debugPrint("Payment was canceled")
-        flutterResult?(nil)
+    // A cancel is a reply with its reason; only a failure is an error.
+    private func handleCancellation(_ reason: String) {
+        debugPrint("Payment was canceled: \(reason)")
+        flutterResult?([Constants.CANCELED_KEY: reason])
     }
 
     private func handleSuccess(venmoAccount: BTVenmoAccountNonce) {
@@ -207,7 +207,7 @@ public class BraintreePaymentPlugin: NSObject, FlutterPlugin {
         do {
             let jsonData = try JSONSerialization.data(withJSONObject: nonceJson, options: [])
             if let jsonString = String(data: jsonData, encoding: .utf8) {
-                flutterResult?(jsonString)
+                flutterResult?([Constants.NONCE_KEY: jsonString])
             } else {
                 flutterResult?(
                     FlutterError(
@@ -270,4 +270,8 @@ public struct Constants {
     static let NONCE_KEY = "nonce"
     static let CANCELED_KEY = "canceled"
     static let ERROR_KEY = "error"
+
+    // Cancel reasons, mirrored by BraintreeCancelReason in Dart
+    static let USER_CANCELED = "userCanceled"
+    static let NO_RESULT = "noResult"
 }

@@ -3,6 +3,7 @@ import 'package:flutter_braintree_payment/paypal/paypal_request.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 import 'braintree_payment_method_channel.dart';
+import 'braintree_result.dart';
 import 'venmo/venmo_account_nonce.dart';
 import 'venmo/venmo_request.dart';
 
@@ -27,11 +28,12 @@ abstract class BraintreePaymentPlatform extends PlatformInterface {
     _instance = instance;
   }
 
-  /// Returns the nonce, or null if the user cancelled.
+  /// Completes with [BraintreeSuccess] or [BraintreeCancelled].
   /// Throws a [PlatformException] with code `error` if the payment failed.
-  Future<VenmoAccountNonce?> venmoPayment(VenmoRequest request);
+  Future<BraintreeResult<VenmoAccountNonce>> venmoPayment(VenmoRequest request);
 
-  /// Returns the nonce, or null if the user cancelled.
+  /// Completes with [BraintreeSuccess] or [BraintreeCancelled].
   /// Throws a [PlatformException] with code `error` if the payment failed.
-  Future<PayPalAccountNonce?> paypalPayment(PayPalRequest request);
+  Future<BraintreeResult<PayPalAccountNonce>> paypalPayment(
+      PayPalRequest request);
 }

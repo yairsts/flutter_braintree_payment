@@ -42,7 +42,10 @@ class _MyAppState extends State<MyApp> {
               "https://example.braintree.com/braintree-payments",
         ),
       );
-      _braintreeResponse = res.toString();
+      _braintreeResponse = switch (res) {
+        BraintreeSuccess(:final nonce) => nonce.nonce,
+        BraintreeCancelled(:final reason) => "cancelled: ${reason.name}",
+      };
     } catch (e) {
       _braintreeResponse = e.toString();
     }
@@ -74,7 +77,10 @@ class _MyAppState extends State<MyApp> {
           androidDeepLinkFallbackUrlScheme: packageInfo.packageName,
         ),
       );
-      _braintreeResponse = res.toString();
+      _braintreeResponse = switch (res) {
+        BraintreeSuccess(:final nonce) => nonce.nonce,
+        BraintreeCancelled(:final reason) => "cancelled: ${reason.name}",
+      };
     } catch (e) {
       _braintreeResponse = e.toString();
     }

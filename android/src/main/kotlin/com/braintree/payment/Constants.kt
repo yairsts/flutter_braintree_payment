@@ -23,4 +23,9 @@ object Constants {
     const val NONCE_KEY = "nonce"
     const val CANCELED_KEY = "canceled"
     const val ERROR_KEY = "error"
+
+    // Cancel reasons, mirrored by BraintreeCancelReason in Dart
+    const val USER_CANCELED = "userCanceled"
+    const val NO_RESULT = "noResult"
+    const val REQUEST_LOST = "requestLost"
 }
