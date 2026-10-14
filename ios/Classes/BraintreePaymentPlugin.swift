@@ -159,11 +159,10 @@ public class BraintreePaymentPlugin: NSObject, FlutterPlugin {
                 code: Constants.ERROR_KEY, message: error.localizedDescription, details: nil))
     }
 
+    // A cancel completes with nil on both platforms; only a failure is an error.
     private func handleCancellation() {
         debugPrint("Payment was canceled")
-        flutterResult?(
-            FlutterError(
-                code: Constants.CANCELED_KEY, message: "Payment was canceled", details: nil))
+        flutterResult?(nil)
     }
 
     private func handleSuccess(venmoAccount: BTVenmoAccountNonce) {

@@ -27,7 +27,11 @@ abstract class BraintreePaymentPlatform extends PlatformInterface {
     _instance = instance;
   }
 
+  /// Returns the nonce, or null if the user cancelled.
+  /// Throws a [PlatformException] with code `error` if the payment failed.
   Future<VenmoAccountNonce?> venmoPayment(VenmoRequest request);
 
+  /// Returns the nonce, or null if the user cancelled.
+  /// Throws a [PlatformException] with code `error` if the payment failed.
   Future<PayPalAccountNonce?> paypalPayment(PayPalRequest request);
 }

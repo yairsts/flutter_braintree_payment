@@ -10,10 +10,14 @@ export 'venmo/venmo_account_nonce.dart';
 export 'venmo/venmo_request.dart';
 
 class BraintreePayment {
+  /// Returns the nonce, or null if the user cancelled.
+  /// Throws a [PlatformException] with code `error` if the payment failed.
   Future<VenmoAccountNonce?> venmoPayment(VenmoRequest request) async {
     return BraintreePaymentPlatform.instance.venmoPayment(request);
   }
 
+  /// Returns the nonce, or null if the user cancelled.
+  /// Throws a [PlatformException] with code `error` if the payment failed.
   Future<PayPalAccountNonce?> paypalPayment(PayPalRequest request) async {
     return BraintreePaymentPlatform.instance.paypalPayment(request);
   }
