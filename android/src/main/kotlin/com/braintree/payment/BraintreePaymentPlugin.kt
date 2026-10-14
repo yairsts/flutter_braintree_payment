@@ -77,31 +77,17 @@ class BraintreePaymentPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
             || requestCode == Constants.PAYPAL_REQUEST_CODE
         ) {
-            when {
-                resultCode == Activity.RESULT_OK && intent != null -> {
-                    val nonce = intent.getStringExtra(Constants.NONCE_KEY)
-                    pendingResult?.success(nonce)
-                }
-
-                resultCode == Activity.RESULT_CANCELED && intent != null -> {
-                    val error = intent.getStringExtra(Constants.ERROR_KEY)
-                    if (error != null) {
-                        pendingResult?.error(Constants.ERROR_KEY, error, null)
-                        return
-                    }
-
-                    val canceled = intent.getStringExtra(Constants.CANCELED_KEY)
-                    if (canceled != null) {
-                        pendingResult?.success(null)
-                        return
-                    }
-                }
-
-                else -> {
-                    pendingResult?.success(null)
-                }
-            }
+            // Take the pending call first so a second result can never reply twice.
+            val result = pendingResult ?: return
             pendingResult = null
+            val error = intent?.getStringExtra(Constants.ERROR_KEY)
+            when {
+                resultCode == Activity.RESULT_OK && intent != null ->
+                    result.success(intent.getStringExtra(Constants.NONCE_KEY))
+                error != null -> result.error(Constants.ERROR_KEY, error, null)
+                // Cancelled, or no result at all: complete with null, never hang.
+                else -> result.success(null)
+            }
         }
     }
 

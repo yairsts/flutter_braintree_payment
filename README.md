@@ -110,7 +110,7 @@ import 'package:package_info_plus/package_info_plus.dart';
       final PackageInfo packageInfo = await PackageInfo.fromPlatform();
 
       try {
-        final VenmoResult? result = await braintreePayment.venmoPayment(
+        final VenmoAccountNonce? result = await braintreePayment.venmoPayment(
           VenmoRequest(
             token: token,
             amount: "10.00",
@@ -121,14 +121,14 @@ import 'package:package_info_plus/package_info_plus.dart';
           ),
         );
 
-        if (result != null && result.status == VenmoPaymentStatus.success) {
-          print("Venmo Payment Success: ${result.nonce}");
-          // Process the payment with your backend using the nonce
+        if (result == null) {
+          print("Venmo payment cancelled");
         } else {
-          print("Venmo Payment Failed or Cancelled: ${result?.status}");
+          print("Venmo payment succeeded: ${result.nonce}");
+          // Process the payment with your backend using the nonce
         }
-      } catch (e) {
-        print("Error during Venmo Payment: $e");
+      } on PlatformException catch (e) {
+        print("Venmo payment failed: ${e.message}");
       }
       ```
 
@@ -140,7 +140,7 @@ import 'package:package_info_plus/package_info_plus.dart';
       final PackageInfo packageInfo = await PackageInfo.fromPlatform();
 
       try {
-          final PayPalResult? result = await braintreePayment.paypalPayment(
+          final PayPalAccountNonce? result = await braintreePayment.paypalPayment(
               PayPalRequest(
                   token: token,
                   amount: "10",
@@ -151,14 +151,14 @@ import 'package:package_info_plus/package_info_plus.dart';
               ),
           );
 
-          if (result != null && result.status == PayPalPaymentStatus.success) {
-              print("PayPal Payment Success: ${result.nonce}");
-              // Process the payment with your backend using the nonce
+          if (result == null) {
+              print("PayPal payment cancelled");
           } else {
-              print("PayPal Payment Failed or Cancelled: ${result?.status}");
+              print("PayPal payment succeeded: ${result.nonce}");
+              // Process the payment with your backend using the nonce
           }
-      } catch (e) {
-          print("Error during PayPal Payment: $e");
+      } on PlatformException catch (e) {
+          print("PayPal payment failed: ${e.message}");
       }
 
       ```

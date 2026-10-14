@@ -101,4 +101,31 @@ void main() {
     expect(result?.authenticateUrl, "AUTHENTICATE_URL");
     expect(result?.payerId, "PAYER_ID");
   });
+
+  group('result contract', () {
+    final request = PayPalRequest(
+      token: "TOKEN",
+      displayName: "EXAMPLE",
+      amount: "10.0",
+      androidAppLinkReturnUrl: "ANDROID_APP_LINK_RETURN_URL",
+      androidDeepLinkFallbackUrlScheme: "ANDROID_DEEP_LINK_FALLBACK_URL_SCHEME",
+    );
+    void reply(Future<Object?> Function() handler) {
+      TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+          .setMockMethodCallHandler(channel, (_) => handler());
+    }
+
+    test('a cancel completes with null', () async {
+      reply(() async => null);
+      expect(await platform.paypalPayment(request), isNull);
+    });
+
+    test('a failure throws a PlatformException with code error', () async {
+      reply(() async => throw PlatformException(code: 'error', message: 'boom'));
+      await expectLater(
+        platform.paypalPayment(request),
+        throwsA(isA<PlatformException>().having((e) => e.code, 'code', 'error')),
+      );
+    });
+  });
 }
