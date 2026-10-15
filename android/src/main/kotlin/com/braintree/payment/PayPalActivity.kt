@@ -30,6 +30,13 @@ class PayPalActivity : ComponentActivity() {
         Log.d(
             "BraintreePaymentPlugin", "PayPalActivity, onCreate, intent: ${intent}"
         )
+        // Android rebuilt this activity: the browser flow belonged to the
+        // destroyed instance, so launching again would open PayPal twice.
+        if (savedInstanceState != null) {
+            handleCancelResult(Constants.REQUEST_LOST)
+            return
+        }
+
         val token = intent.getStringExtra(Constants.TOKEN_KEY)
         val displayName = intent.getStringExtra(Constants.DISPLAY_NAME_KEY)
         val amount = intent.getStringExtra(Constants.AMOUNT_KEY)

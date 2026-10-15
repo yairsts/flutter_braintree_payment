@@ -32,6 +32,13 @@ class VenmoActivity : ComponentActivity() {
             "BraintreePaymentPlugin",
             "VenmoActivity, onCreate, intent: ${intent}"
         )
+        // Android rebuilt this activity: the Venmo flow belonged to the
+        // destroyed instance, so launching again would open Venmo twice.
+        if (savedInstanceState != null) {
+            handleCancelResult(Constants.REQUEST_LOST)
+            return
+        }
+
         val token = intent.getStringExtra(Constants.TOKEN_KEY)
         val displayName = intent.getStringExtra(Constants.DISPLAY_NAME_KEY)
         val amount = intent.getStringExtra(Constants.AMOUNT_KEY)

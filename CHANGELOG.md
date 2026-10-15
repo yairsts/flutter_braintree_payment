@@ -18,3 +18,5 @@
 - iOS: a cancelled Venmo payment now completes with `null`, like PayPal. It used to throw a `PlatformException` with code `error`.
 ## [3.0.0] - 2026-10-14
 - **Breaking:** `paypalPayment` and `venmoPayment` complete with a `BraintreeResult`: `BraintreeSuccess` with the nonce, or `BraintreeCancelled` with a `BraintreeCancelReason` (`userCanceled`, `noResult`, or `requestLost` on Android). They used to complete with `null` on a cancel, which hid why. A failure still throws a `PlatformException` with code `error`.
+## [3.0.1] - 2026-10-15
+- Android: when Android rebuilds the PayPal or Venmo screen while the payment is open, the payment completes as cancelled with `requestLost` instead of opening PayPal or Venmo a second time.
